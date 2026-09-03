@@ -4,10 +4,58 @@ body { overflow: hidden; font-family: system-ui, -apple-system, BlinkMacSystemFo
 .album { position: relative; width: 100%; height: 100vh; overflow: hidden; background: #000; color: #fff; }
 .slider { display: flex; width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .slider::-webkit-scrollbar { display: none; }
-.slide { position: relative; flex: 0 0 100%; width: 100%; height: 100%; margin: 0; scroll-snap-align: start; scroll-snap-stop: always; background: #111; }
-.slide::after { content: ""; position: absolute; inset: auto 0 0 0; height: 28%; background: linear-gradient(to top, rgba(0,0,0,.5), transparent); pointer-events: none; }
-.slide img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; user-select: none; -webkit-user-drag: none; }
-.slide figcaption { position: absolute; right: 20px; bottom: 46px; z-index: 2; font-size: 14px; letter-spacing: 1px; color: rgba(255,255,255,.92); }
+
+.slide {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  overflow: hidden;
+  background: #111;
+  isolation: isolate;
+}
+
+/* 用同一张照片做模糊背景：填满屏幕，但不影响主体照片完整显示 */
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: -30px;
+  z-index: 0;
+  background-image: var(--slide-bg);
+  background-size: cover;
+  background-position: center;
+  filter: blur(24px) brightness(.58);
+  transform: scale(1.08);
+  pointer-events: none;
+}
+
+.slide::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: auto 0 0 0;
+  height: 28%;
+  background: linear-gradient(to top, rgba(0,0,0,.5), transparent);
+  pointer-events: none;
+}
+
+/* 关键：contain = 完整显示整张照片，不裁切 */
+.slide img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.slide figcaption { position: absolute; right: 20px; bottom: 46px; z-index: 3; font-size: 14px; letter-spacing: 1px; color: rgba(255,255,255,.92); }
 .music-btn { position: absolute; z-index: 30; top: max(18px, env(safe-area-inset-top)); right: 18px; width: 46px; height: 46px; border: 1px solid rgba(255,255,255,.28); border-radius: 999px; color: #fff; background: rgba(0,0,0,.34); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-size: 24px; cursor: pointer; }
 .dots { position: absolute; z-index: 20; left: 50%; bottom: max(18px, env(safe-area-inset-bottom)); transform: translateX(-50%); display: flex; gap: 8px; pointer-events: none; }
 .dot { width: 6px; height: 6px; border-radius: 999px; background: rgba(255,255,255,.36); transition: .25s ease; }
