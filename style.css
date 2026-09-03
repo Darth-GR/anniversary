@@ -1,0 +1,21 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 100%; min-height: 100%; background: #000; }
+body { overflow: hidden; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.album { position: relative; width: 100%; height: 100vh; overflow: hidden; background: #000; color: #fff; }
+.slider { display: flex; width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.slider::-webkit-scrollbar { display: none; }
+.slide { position: relative; flex: 0 0 100%; width: 100%; height: 100%; margin: 0; scroll-snap-align: start; scroll-snap-stop: always; background: #111; }
+.slide::after { content: ""; position: absolute; inset: auto 0 0 0; height: 28%; background: linear-gradient(to top, rgba(0,0,0,.5), transparent); pointer-events: none; }
+.slide img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; user-select: none; -webkit-user-drag: none; }
+.slide figcaption { position: absolute; right: 20px; bottom: 46px; z-index: 2; font-size: 14px; letter-spacing: 1px; color: rgba(255,255,255,.92); }
+.music-btn { position: absolute; z-index: 30; top: max(18px, env(safe-area-inset-top)); right: 18px; width: 46px; height: 46px; border: 1px solid rgba(255,255,255,.28); border-radius: 999px; color: #fff; background: rgba(0,0,0,.34); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-size: 24px; cursor: pointer; }
+.dots { position: absolute; z-index: 20; left: 50%; bottom: max(18px, env(safe-area-inset-bottom)); transform: translateX(-50%); display: flex; gap: 8px; pointer-events: none; }
+.dot { width: 6px; height: 6px; border-radius: 999px; background: rgba(255,255,255,.36); transition: .25s ease; }
+.dot.active { width: 20px; background: rgba(255,255,255,.95); }
+.intro { position: absolute; inset: 0; z-index: 40; display: grid; place-items: center; padding: 24px; background: rgba(0,0,0,.64); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: opacity .7s ease, visibility .7s ease; cursor: pointer; }
+.intro.hidden { opacity: 0; visibility: hidden; }
+.intro-card { text-align: center; transform: translateY(-2vh); }
+.heart { font-size: 46px; margin-bottom: 14px; }
+.intro h1 { margin: 0 0 10px; font-size: clamp(28px, 7vw, 44px); font-weight: 650; letter-spacing: .06em; }
+.intro p { margin: 0; font-size: 15px; color: rgba(255,255,255,.76); letter-spacing: .12em; }
+@media (max-width: 640px) { .album { height: 100svh; } }
