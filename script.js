@@ -6,15 +6,6 @@ const dotsEl = document.getElementById('dots');
 const slides = [...document.querySelectorAll('.slide')];
 let playing = false;
 
-// 每一页用自己的照片生成模糊背景，主体图片则使用 object-fit: contain 完整显示。
-slides.forEach((slide) => {
-  const img = slide.querySelector('img');
-  if (img) {
-    const src = img.getAttribute('src');
-    slide.style.setProperty('--slide-bg', `url("${src}")`);
-  }
-});
-
 slides.forEach((_, i) => {
   const dot = document.createElement('span');
   dot.className = 'dot' + (i === 0 ? ' active' : '');
