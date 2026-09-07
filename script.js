@@ -1,3 +1,5 @@
+import { inject } from '@vercel/analytics';
+
 const audio = document.getElementById('bgm');
 const slider = document.getElementById('slider');
 const intro = document.getElementById('intro');
@@ -5,6 +7,9 @@ const musicBtn = document.getElementById('musicBtn');
 const dotsEl = document.getElementById('dots');
 const slides = [...document.querySelectorAll('.slide')];
 let playing = false;
+
+// Initialize Vercel Web Analytics
+inject();
 
 slides.forEach((_, i) => {
   const dot = document.createElement('span');
